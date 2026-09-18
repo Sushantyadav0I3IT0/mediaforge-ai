@@ -60,6 +60,39 @@ Frontend runs at `http://localhost:3000`.
 Open `http://localhost:3000`, paste a paragraph or two of source content (a news
 article, an advisory, a report excerpt), pick a couple of formats, hit **Generate**.
 
+## Deploy to Vercel
+
+Deploy the frontend and backend as two Vercel projects from this repository.
+
+### Backend project
+1. Import the repository into Vercel and set **Root Directory** to `backend`.
+2. Vercel will use `backend/api/index.py` and `backend/vercel.json` for the FastAPI app.
+3. Add these environment variables for Production:
+
+```env
+OPENROUTER_API_KEY=your_key
+OPENROUTER_MODEL=openai/gpt-4o-mini
+CORS_ORIGINS=https://your-frontend.vercel.app
+```
+
+Copy the deployed backend URL, for example `https://mediaforge-api.vercel.app`.
+
+### Frontend project
+1. Create a second Vercel project from the same repository.
+2. Set **Root Directory** to `frontend`.
+3. Add this Production environment variable:
+
+```env
+NEXT_PUBLIC_API_BASE=https://mediaforge-api.vercel.app
+```
+
+4. Deploy the frontend and replace the backend `CORS_ORIGINS` value with the final
+  frontend URL if Vercel assigned a different domain.
+
+The backend is serverless on Vercel. Generated presentation files use temporary
+filesystem storage, so use object storage such as S3 or Vercel Blob for durable
+downloads in production.
+
 ## Getting an API key
 This prototype calls OpenRouter's OpenAI-compatible chat completions API by default
 using `openai/gpt-4o-mini`. Create an API key at openrouter.ai and set it as
