@@ -89,8 +89,8 @@ NEXT_PUBLIC_API_BASE=https://mediaforge-api.vercel.app
 4. Deploy the frontend and replace the backend `CORS_ORIGINS` value with the final
   frontend URL if Vercel assigned a different domain.
 
-The backend is serverless on Vercel. Generated presentation files use temporary
-filesystem storage, so use object storage such as S3 or Vercel Blob for durable
+The backend is serverless on Vercel. Generated presentation files use `/tmp` storage
+for the function lifetime, so use object storage such as S3 or Vercel Blob for durable
 downloads in production.
 
 ## Getting an API key

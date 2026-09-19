@@ -9,7 +9,11 @@ import uuid
 
 from pptx import Presentation
 
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "generated")
+if os.getenv("VERCEL"):
+    # Vercel's deployed bundle is read-only; /tmp is writable for this invocation.
+    OUTPUT_DIR = os.path.join("/tmp", "mediaforge-generated")
+else:
+    OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "..", "generated")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
